@@ -4,7 +4,7 @@ dist=root+'\\project-dist',styl=root+'\\styles'
 
 crtFile=async(dist,type)=>await fsPrms.writeFile(dist,type)
 crtDir=async(dist)=>fs.access(dist,(e)=>{if(e){fsPrms.mkdir(dist)}})
-joinFile=async()=>{allCss=await fsPrms.readdir(styl,{withFileTypes:1}),fromCss=Array(0)
+joinCss=async()=>{allCss=await fsPrms.readdir(styl,{withFileTypes:1}),fromCss=Array(0)
  for(elf of allCss){ext=path.extname(styl+'\\'+elf.name)
  if(ext=='.css'){fromCss.push(`${await fsPrms.readFile(styl+'\\'+elf.name)}\n`)}}
  crtFile(dist+'\\style.css',fromCss)
@@ -21,5 +21,5 @@ for(elh of allHtml){rex=new RegExp(`{{${elh.name.split('.')[0]}}}`,'g')
  tmplHtml=tmplHtml.replace(rex,await fsPrms.readFile(root+'\\components\\'+`${elh.name}`))}
  crtFile(dist+'\\index.html',tmplHtml)
 }
-(async()=>{crtDir(dist);joinFile();joinHTML();copyDir(root+'\\assets',dist+'\\assets')})
+(async()=>{crtDir(dist);joinCss();joinHTML();copyDir(root+'\\assets',dist+'\\assets')})
 ()
